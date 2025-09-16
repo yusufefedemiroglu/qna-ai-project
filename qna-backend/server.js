@@ -2,6 +2,7 @@ import express from "express"
 import  mongoose from "mongoose"
 import  cors from "cors"
 import dotenv from "dotenv";
+import OpenAI from "openai";
 
 dotenv.config();
 
@@ -10,7 +11,7 @@ app.use(express.json());
 app.use(cors());
 
 mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("works"))
+.then(() => console.log("db works"))
 .catch(err => console.error("not works:",err));
 
 
@@ -22,8 +23,13 @@ const QnaSchema = new mongoose.Schema({
 
 const Qna = mongoose.model("Qna", QnaSchema);
 
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+})
+
+
 app.get("/",(req,res) => {
-    res.send("server works");
+    res.send("backend working");
 });
 
 app.post("/ask",async (req,res) => {
@@ -35,15 +41,23 @@ app.post("/ask",async (req,res) => {
         return res.json({answer: exists.answer,source:"db"});
 
     }
-    const answer = "rnnotexisting";
+
+    const completion = await openai.chat.completions.create({
+      model:"gpt-4o-mini",
+      messages:[
+        {role:"system",content:"Sen kisa ve net cevaplar veren bir yardimci botsun karisiklik yaratma."},
+        {role:"user",content:question},
+      ],
+    });
+
+    const answer = completion.choices[0].message.content
 
 
 
     const newQna = new Qna ({question,answer});
-
     await newQna.save();
 
-    res.json({answer, source: "willbeai"});
+    res.json({answer, source: "ai"});
 }catch (err) {
     console.error("something  happened on post",err)
 }

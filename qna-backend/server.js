@@ -36,6 +36,10 @@ app.post("/ask",async (req,res) => {
     try{
     const { question } = req.body;
 
+    if(!question || question.trim().length < 5) {
+      return res.status(400).json({error:"Please enter a valid question."})
+    }
+
     let exists = await Qna.findOne({question: {$regex:question,$options:"i"} });
     if (exists)  {
         return res.json({answer: exists.answer,source:"db"});
@@ -57,7 +61,7 @@ app.post("/ask",async (req,res) => {
     const newQna = new Qna ({question,answer});
     await newQna.save();
 
-    res.json({answer, source: "ai"});
+    res.json({question,answer, source: "ai",createdAt:newQna.createdAt});
 }catch (err) {
     console.error("something  happened on post",err)
 }

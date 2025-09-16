@@ -76,6 +76,9 @@ app.post("/ask",limiter,async (req,res) => {
     const newQna = new Qna ({question,answer});
     await newQna.save();
 
+    console.log(`[${new Date().toISOString()}]  Q: ${question}`);
+    console.log(`[${new Date().toISOString()}]  A: ${answer}`);
+
     res.json({question,answer, source: "ai",createdAt:newQna.createdAt});
 }catch (err) {
     console.error("something  happened on post",err)

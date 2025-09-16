@@ -3,12 +3,20 @@ import  mongoose from "mongoose"
 import  cors from "cors"
 import dotenv from "dotenv";
 import OpenAI from "openai";
+import rateLimit from "express-rate-limit"
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+const limiter = rateLimit({
+  windowMs: 60 * 1000,
+  max:20,
+  message: {error:"Too many requests, please try again later."}
+})
+
 
 mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log("db works"))
@@ -32,7 +40,7 @@ app.get("/",(req,res) => {
     res.send("backend working");
 });
 
-app.post("/ask",async (req,res) => {
+app.post("/ask",limiter,async (req,res) => {
     try{
     const { question } = req.body;
 

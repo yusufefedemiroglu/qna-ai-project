@@ -46,6 +46,10 @@ app.post("/ask",async (req,res) => {
 
     }
 
+
+    let answer;
+    try{
+
     const completion = await openai.chat.completions.create({
       model:"gpt-4o-mini",
       messages:[
@@ -54,8 +58,11 @@ app.post("/ask",async (req,res) => {
       ],
     });
 
-    const answer = completion.choices[0].message.content
-
+    answer = completion.choices[0].message.content
+    }catch(err){
+      console.error("OpenAI error",err.message);
+      answer = "AI could not answer atm. Please try again"
+    }
 
 
     const newQna = new Qna ({question,answer});

@@ -49,7 +49,7 @@ app.post("/ask",async (req,res) => {
     const completion = await openai.chat.completions.create({
       model:"gpt-4o-mini",
       messages:[
-        {role:"system",content:"Sen kisa ve net cevaplar veren bir yardimci botsun karisiklik yaratma."},
+        {role:"system",content:"You are a helpful bot that gives short and clear answers, do not create confusion."},
         {role:"user",content:question},
       ],
     });

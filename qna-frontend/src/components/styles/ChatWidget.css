@@ -1,0 +1,116 @@
+.chat-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  z-index: 9999;
+}
+
+/* Yüzen buton */
+.chat-button {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  width: 56px;
+  height: 56px;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Pencere */
+.chat-box {
+  width: 340px;
+  height: 440px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.16);
+}
+
+/* Başlık */
+.chat-header {
+  background: #2563eb;
+  color: #fff;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+}
+.close-btn {
+  background: transparent;
+  color: #fff;
+  border: 0;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Mesaj alanı */
+.chat-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background: #f8fafc;
+}
+
+/* Mesajlar */
+.message {
+  max-width: 80%;
+  padding: 8px 10px;
+  border-radius: 10px;
+  margin: 6px 0;
+  line-height: 1.3;
+  font-size: 14px;
+  white-space: pre-wrap;
+}
+.message.user {
+  margin-left: auto;
+  background: #dbeafe;
+  color: #111827;
+  border-bottom-right-radius: 4px;
+}
+.message.bot {
+  margin-right: auto;
+  background: #e5e7eb;
+  color: #111827;
+  border-bottom-left-radius: 4px;
+}
+.message.typing {
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* Giriş alanı */
+.chat-input {
+  display: flex;
+  gap: 8px;
+  border-top: 1px solid #e5e7eb;
+  padding: 8px;
+  background: #fff;
+}
+.chat-input textarea {
+  flex: 1;
+  resize: none;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 14px;
+}
+.chat-input button {
+  background: #2563eb;
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  padding: 0 14px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.chat-input button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
